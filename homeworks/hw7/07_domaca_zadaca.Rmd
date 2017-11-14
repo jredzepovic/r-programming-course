@@ -1,0 +1,91 @@
+---
+title: "7. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '14 studenoga 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+### Zadatak 1
+
+```{r}
+my_which <- function(log_vector) {
+  a <- seq(1, length(log_vector), 1)
+  a[log_vector]
+}
+
+my_which(c(T, F, F, F, F, T, F, T))
+```
+
+***
+
+### Zadatak 2
+
+```{r}
+moment <- function(k) {
+  f <- function(x) {
+    avg <- mean(x)
+    suma <- sum((x-avg)**(k+1))
+    suma/length(x)
+  }
+  f
+}
+
+nulti_moment <- moment(0)
+prvi_moment <- moment(1)
+
+nulti_moment(1:1000)
+prvi_moment(1:1000)
+cat('\n')
+sd(1:1000)
+sqrt(prvi_moment(1:1000))
+```
+
+***
+
+### Zadatak 3
+
+```{r}
+Osoba <- function(oib, prezime, tezina) {
+    o <- list(oib = oib, prezime = prezime, tezina = tezina)
+    class(o) <- "Osoba"
+    o
+}
+
+print.Osoba <- function(o) {
+    rez <- paste("OIB:", o$oib, ", Prezime:", o$prezime, ", tezina:", o$tezina, "\n")
+    cat(rez)
+}
+
+Zaposlenik <- function(oib, prezime, tezina, nadredjeni = NA) {
+  zaposlenik <- Osoba(oib, prezime, tezina)
+  zaposlenik$nadredjeni <- nadredjeni
+  class(zaposlenik) <- c("Zaposlenik", class(zaposlenik))
+  zaposlenik
+}
+
+print.Zaposlenik <- function(z) {
+  print.Osoba(z)
+  if(is.na(z$nadredjeni)) {
+    print("Nema nadredjenog")
+  } else {
+    print("Nadredjeni:")
+    print.Osoba(z$nadredjeni)
+  }
+}
+
+z1 <- Zaposlenik("123456", "z1", 80)
+z2 <- Zaposlenik("654321", "z2", 80, .GlobalEnv$z1)
+
+print(z1)
+cat('\n')
+print(z2)
+```
+
