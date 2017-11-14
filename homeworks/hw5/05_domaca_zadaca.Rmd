@@ -1,0 +1,50 @@
+---
+title: "5. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '14 studenoga 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+### Zadatak 1
+
+```{r}
+mjesto <- data.frame( pbr = c(10000, 51000, 21000, 31000, 2000),
+         nazivMjesta = c("Zagreb", "Rijeka", "Split", "Osijek", "Dubrovnik"),
+         prirez = c(18, 15, 10, 13, 10))
+
+opis <- ifelse(mjesto$prirez < 12, "mali", ifelse(mjesto$prirez > 15, "visok", "srednji"))
+mjesto$prirezOpis <- factor(opis, levels = c("mali", "srednji", "visok"), ordered = TRUE)
+
+mjesto
+```
+
+***
+
+### Zadatak 2
+
+```{r}
+a <- seq(1, 100, 1)
+paran_a <- c(ifelse(a %% 2 == 0, a, NA))
+
+print(sum(paran_a*paran_a, na.rm = TRUE))
+```
+
+***
+
+### Zadatak 3
+
+```{r}
+kvadar <- list(visina = 10, sirina = 20, dubina = 30)
+class(kvadar) <- "Kvadar"
+
+kvadar
+```
+

@@ -1,0 +1,48 @@
+---
+title: "6. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '14 studenoga 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+### Zadatak 1
+
+```{r}
+library(magrittr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+search()
+```
+
+***
+
+### Zadatak 2
+
+```{r}
+set.seed(1234)
+a <- sample(1:100, 20, replace = T)
+
+print(a)
+print(rev(a))
+print(unique(a))
+print(sort(a))
+```
+
+***
+
+### Zadatak 3
+
+```{r}
+ls(as.environment("package:magrittr"))
+```
+
