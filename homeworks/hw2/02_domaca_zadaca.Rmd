@@ -1,0 +1,62 @@
+---
+title: "02_domaca_zadaca"
+author: "Jasmin Redzepovic"
+date: '16 listopada 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+### Zadatak 1
+
+
+```{r}
+as.complex(2)
+as.integer(-3.25)
+as.logical("0")
+as.numeric(TRUE)
+as.character(11.5+2i)
+as.numeric("ABC")
+```
+
+***
+
+### Zadatak 2
+
+
+```{r}
+3 * (10**9)
+log10(5)
+10 %/% 3
+10 %% 3
+tan(75 * (pi/180))
+```
+
+***
+
+### Zadatak 3
+
+
+```{r}
+if (is.na(4L / 0)) print("NA")
+if (is.nan(4L / 0)) print("NaN")
+if (is.null(4L / 0)) print("NULL")
+```
+
+***
+
+### Zadatak 4
+
+
+```{r}
+x <- 5
+ls()
+x <- NULL
+ls()
+```

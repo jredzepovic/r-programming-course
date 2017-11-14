@@ -1,0 +1,63 @@
+---
+title: "4. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '5 studenoga 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+### Zadatak 1
+
+```{r}
+mjestoNH <- read.csv("mjestoNOHEADER.csv", header = FALSE, sep = " ", col.names = c("pbr","nazivMjesta","prosjPlacaKn","brojStanovnika","prirez"))
+mjestoNH
+```
+
+***
+
+### Zadatak 2
+
+```{r}
+racun <- read.csv("racun.csv", stringsAsFactors = FALSE)
+nrow(racun)
+ncol(racun)
+names(racun)
+```
+
+***
+
+### Zadatak 3
+
+```{r}
+racun$katArtikl <- factor(racun$katArtikl)
+racun[racun$katArtikl == "slatkisi i grickalice" & racun$cijena < 12, c("sifArtikl","nazArtikl","cijena")]
+cat("\n----------------------------------\n")
+table(racun$katArtikl)
+cat("\n----------------------------------\n")
+racun$ukupno <- racun$kolicina * racun$cijena
+ukupnoRacun <- sum(racun$ukupno)
+racun
+cat("\n----------------------------------\n")
+ukupnoRacun
+```
+
+***
+
+### Zadatak 4
+
+```{r}
+mjestoNULL <- read.csv("mjestoNULL.csv")
+mjestoNULL$prosjPlacaNum1 <- as.numeric(mjestoNULL$prosjPlacaKn)
+mjestoNULL$prosjPlacaNum2 <- as.numeric(as.character(mjestoNULL$prosjPlacaKn))
+mjestoNULL
+```
+- prosjPlacaNum1: svaka kategorija(prosjPlacaKn je faktor) ima dodijeljenu numericku vrijednost, pa se ona ispisala
+- prosjPlacaNum2: koristenjem as.numeric(as.character()) vrijednost se pretvara u numericki tip neovisno radi li se o faktoru ili znakovnom stupcu
+
