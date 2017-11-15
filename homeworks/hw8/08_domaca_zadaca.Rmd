@@ -1,0 +1,61 @@
+---
+title: "8. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '15 studenoga 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+### Zadatak 1
+
+```{r}
+m <- rbind(1:5, seq(2, 10, 2), rep(3, 5), 3:7, seq(100, 500, 100))
+m
+
+cat('\n')
+
+apply(m, 1, function(x) {
+  even_locations <- which(x %% 2 == 0)
+  if (is_empty(even_locations)) {
+    0
+  } else {
+    x[even_locations[1]]
+  }
+})
+```
+
+***
+
+### Zadatak 2
+
+```{r}
+set.seed(1234)
+lista <- replicate(100, sample(1:10, sample(1:10, 1)))
+
+v <- sapply(lista, length)
+
+l <- lapply(lista, function(x) {
+  round((x - mean(x))/sd(x), 4)
+})
+
+ind4 <- sapply(lista, function(x) {
+  (4 %in% x)
+})
+ind4 <- which(ind4)
+
+df5 <- lapply(lista, function(x) {
+  if (length(x) == 5) {
+    x
+  }
+})
+df5 <- as.data.frame(df5[!sapply(df5, is.null)])
+df5
+```
+
