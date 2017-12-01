@@ -1,0 +1,204 @@
+---
+output:
+  html_document: default
+---
+
+```{r setup, include = F}
+knitr::opts_chunk$set(results = 'hold')
+```
+
+******************
+
+## OSNOVE PROGRAMSKOG JEZIKA R
+#### **Fakultet elektrotehnike i računarstva, Sveučilište u Zagrebu**
+#### XX/XX/XXXX
+
+******************
+
+# **MEĐUISPIT 2017/2018**  
+
+======================================================================================
+
+#### JMBAG: 0036485112         
+#### Ime i prezime: Jasmin Redžepović
+#### e-mail: jr48511@fer.hr       
+#### IP adresa: 161.53.78.34     
+
+
+======================================================================================
+
+#### OSNOVNE UPUTE
+
+U nastavku slijedi niz zadataka za završni ispit. Rješenja zadatka mogu uključivati **upisivanje programskog koda** ili **čistog teksta** te **izvršavanje programskog koda**. Molimo da se pridržavate sljedećih naputaka:
+
+- prije rješavanja stisnite gumb **Knit to HTML** kako bi provjerili ispravnost sučelja te dobili predložak ispita u preglednijem obliku u prozoru preglednika s desne strane
+- ukoliko nije drugačije navedeno, prostor za rješavanje zadataka sami stvarate kombinacijom tipaka **CTRL+ALT+I** ili odabirom opcija **Insert -> R**
+- pažljivo čitajte tekstove zadataka
+- tekst zadatka može sadržavati i programski kod kojeg morate izmijeniti i nadopuniti te izvršiti već prema uputama danim u tekstu zadatka i / ili komentarima postojećeg programskog koda
+- ukoliko je rješenje zadatka programski kod koji nešto ispisuje, budite sigurni da bilježnica uključuje i taj ispis
+- programski kod slobodno komentirajte
+
+
+Nakon ispunjavanja bilježnice odaberite opciju **Knit to HTML* i pohranite rezultat u HTML obliku u predviđeni repozitorij na *Moodle* stranicama predmeta. 
+
+Tijekom rješavanja bilježnice smijete se koristiti pomoćnim sredstvima kao što su podsjetnici, dokumentacija jezika R, bilježnice s predavanja, *Google* tražilica. **Ne smijete razmjenjivati informacije sa drugim polaznicima ispita bilo kojim vidom komunikacije, uključujući i elektroničku poštu, društvene mreže, chat programe ili korištenje zajedničkog dijeljenog repozitorija!**
+
+Pohranom HTML bilježnice pod Vašim korisničkim imenom i lozinkom garantirate da tijekom ove provjere znanje niste od drugoga primili niti pružili pomoć te da se niste koristili nedopuštenim sredstvima. Ove su radnje povreda Kodeksa ponašanja te mogu uzrokovati trajno isključenje s Fakulteta.
+
+
+```{r}
+rm(list = ls())    # brišemo postojeće varijable kako bi krenuli od nule
+```
+
+Učitane podatke možete vidjeti u prozoru s gornje desne strane sučelja **RStudio**, tab *Environment**.
+
+======================================================================================
+
+## ZADACI
+
+******************
+
+1. Stvorite sljedeće vektore:
+
+- numerički vektor `a`: (1000, 999.5, 999, 998.5, ...., 1, 0.5, 0)
+- logički vektor `b` od 500 elemenata sa sljedećim karakteristikama:
+     - prvih 200 elemenata su `TRUE`
+     - drugih 200 elemenata su `FALSE`
+     - zadnjih 100 elemenata alterniraju `TRUE` i `FALSE`
+          
+```{r}
+a <- seq(1000, 0, -0.5)
+b <- c((rep(TRUE, times = 200)), (rep(FALSE, times = 200)), (rep(c(TRUE,FALSE), times = 50)))
+```
+
+******************
+
+2. Stvorite jediničnu kvadratnu matricu¸`m` dimenzije 100 x 100 (jedinična matrica ima jedinice na dijagonali, ostalo nule). Ispišite podmatricu 10 x 10 koja predstavlja donji desni isječak originalne matrice.
+
+(NAPOMENA: za stvaranje matrice dozvoljeno je koristiti bilo koji način koji će stvoriti ispravan rezultat)
+```{r}
+m <- diag(1,100,100)
+m[91:100,91:100]
+```
+
+********************
+
+3. Izvršite sljedeći programski odsječak:
+
+```{r}
+lista <- list(1:5, seq(2, 20, 4), c("A", "B", "C", "D", "E", "F"))
+```
+
+a) Ispišite umnožak prvog i drugog elementa liste.
+```{r}
+lista[[1]] * lista[[2]]
+```
+
+b) Odgovorite: može li se gornja lista pretvoriti u podatkovni okvir? Ako da, obavite pretvorbu i ispišite novi podatkovni okvir. Ako ne, obrazložite zašto pretvorba nije moguća. 
+
+Ne može se pretvoriti u podatkovni okvir jer elementi liste imaju različit broj elemenata, a podatkovni okvir mora imati stupce s istim brojem redaka.
+
+******************************
+
+4. Pretvorite znakovni vektor `t` u ordinalni faktor `t.f`:
+
+```{r}
+t <- c("vrlo toplo", "toplo", "hladno", "vrlo hladno", "umjereno", "hladno", "vrlo toplo", "toplo", "vrlo hladno",
+       "toplo", "toplo", "vrlo toplo")
+
+t.f <- factor(t, levels = c("vrlo hladno", "hladno", "umjereno", "toplo", "vrlo toplo"), ordered = TRUE)
+```
+
+Ispišite frekvencije kategorija silazno (ukoliko je potrebno, funkciju za sortiranje elemenata potražite u dokumentaciji).
+```{r}
+sort(table(t.f), decreasing = TRUE)
+```
+
+**********************************
+
+5. Izvršite sljedeći programski odsječak:
+
+```{r}
+data(quakes)
+```
+
+U okolinu je sada učitan podatkovni okvir `quakes` koji opisuje potrese blizu otoka Fiji. 
+
+a) Koje su dimenzije podatkovnog okvira?
+```{r}
+dim(quakes)
+```
+
+b) Ispišite nekoliko redaka sa početka ovog podatkovnog skupa, i nekoliko redaka s kraja.
+```{r}
+head(quakes, 4)
+cat("------\n")
+tail(quakes, 4)
+```
+
+c) Koja je prosječna, najveća i najmanja zabilježena magnituda potresa?
+```{r}
+avg_mag <- mean(quakes$mag)
+min_mag <- min(quakes$mag)
+max_mag <- max(quakes$mag)
+
+avg_mag
+min_mag
+max_mag
+```
+
+d) Koliko ima zabilježenih potresa na dubini između 500 i 600 km (uključive granice)
+```{r}
+q1 <- quakes[quakes$depth>=500 & quakes$depth<=600, names(quakes)]
+nrow(q1)
+```
+
+****************************************
+
+6. Učitajte paket `dplyr`. Izvršite sljedeći programski odsječak:
+
+```{r}
+library(dplyr)
+a <- 1:10
+b <- 5:15
+```
+
+Provjerite ima li razlike između rezultata funkcija istog imena `intersect` (jedna iz paketa `dplyr`, druga iz paketa `base`) kada im pošaljemo `a` i `b` kao argumente.
+```{r}
+base::intersect(a,b)
+dplyr::intersect(a,b)
+# nema razlike
+```
+
+****************************************************
+
+7. Učitajte podatkovni okvir `podaci.csv` u globalnu okolinu. On sadrži informacije o 1000 osoba - njihov spol, visinu u cm i težinu u kg. Podaci su dobiveni iz relacijske baze podataka, koja nedostajuće vrijednosti prikazuje kao NULL.
+```{r}
+podaci <- read.csv("podaci.csv", stringsAsFactors = FALSE, na.strings = "NULL")
+```
+
+a) Koliko ima nedostajućih vrijednosti u svakom pojedinom stupcu?
+```{r}
+summary(podaci)
+cat("------\n")
+sapply(podaci, function(x) sum(is.na(x)))
+```
+
+b) Uz pomoć funkcije `lapply` i anonimne funkcije uklonite nedostajuće vrijednosti iz **numeričkih** stupaca okvira na način da nedostajuće vrijednosti zamijenite prosječnom vrijednosti stupca. Nedostajuće vrijednosti iz ostalih stupaca moraju biti postavljene na `NA`. Rezultat pohranite u varijablu `podaci.2` (koja mora biti podatkovni okvir!). 
+```{r}
+podaci.2 <- lapply(podaci, function(x) {
+  if(is.numeric(x)) {
+    replace(x, is.na(x), round(mean(x, na.rm = TRUE), 2))
+  } else {
+    x
+  }
+})
+podaci.2 <- as.data.frame(podaci.2)
+podaci.2
+```
+
+*************************************************
+
+
+
+
