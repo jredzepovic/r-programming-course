@@ -1,0 +1,38 @@
+---
+title: "9. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '7 prosinca 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+# Zadatak 1
+
+```{r}
+set.seed(1234)
+rnorm(n = 100000, mean = 10000, sd = 1000) %>% ceiling %>% unique %>% sort %>% sample(100) %>% matrix(ncol = 10, byrow = T) %>% rowSums %>% mean
+```
+
+***
+
+# Zadatak 2
+
+```{r}
+vrijeme <- read.csv("weather.csv", stringsAsFactors = F)
+head(vrijeme)
+cat("------\n")
+summary(vrijeme)
+# ne radi se o urednim podacima jer stupac Measure sadrzi vise razlicitih varijabli, pa tako i stupac Value sadrzi # vrijednosti razlicitih mjernih jedinica
+
+vrijeme2 <- spread(vrijeme, "Measure", "Value")
+head(vrijeme2)
+write.csv(vrijeme2, file = "weatherClean.csv", row.names = F)
+```
+
