@@ -1,0 +1,66 @@
+---
+title: "10. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '15 prosinca 2017 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(lubridate)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+# Zadatak 1
+
+```{r}
+crimes <- read.csv("crimeSample.csv", stringsAsFactors = F)
+
+crimes$Dispatch_Date_Time <- as.POSIXct(crimes$Dispatch_Date_Time, tz = "EST")
+```
+
+***
+
+# Zadatak 2
+
+```{r}
+crimes$year <- year(crimes$Dispatch_Date_Time)
+crimes$month <- month(crimes$Dispatch_Date_Time)
+crimes$hour <- hour(crimes$Dispatch_Date_Time)
+
+dangerous_months <- table(crimes$month)
+dangerous_hours <- table(crimes$hour)
+
+dangerous_months <- dangerous_months[dangerous_months == max(dangerous_months)]
+dangerous_hours <- dangerous_hours[dangerous_hours == max(dangerous_hours)]
+dangerous_months
+cat("------\n")
+dangerous_hours
+```
+Najvise zlocina se dogada u 5. i 10. mjesecu.
+Prema podacima najopasniji sat u danu je 23 sata.
+
+***
+
+# Zadatak 3
+
+```{r}
+crimes$Text_General_Code <- tolower(crimes$Text_General_Code)
+
+burglary_percentage <- sum(str_detect(crimes$Text_General_Code, "burglary"))*100 / length(crimes$Text_General_Code)
+robbery_percentage <- sum(str_detect(crimes$Text_General_Code, "robbery"))*100 / length(crimes$Text_General_Code)
+paste("Burglary:", burglary_percentage, "%")
+paste("Robbery:", robbery_percentage, "%")
+```
+
+***
+
+# Zadatak 4
+
+```{r}
+str_extract_all(crimes$Location_Block, "\\b\\d{4}\\b") %>% unlist %>% unique
+```
+
