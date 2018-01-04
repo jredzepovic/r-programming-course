@@ -407,7 +407,7 @@ filter(hflights, CancellationCode == "B") %>% group_by(Month) %>% summarise(BadW
 # LAX, JFK i LGA u različitim danima u tjednu
 # novi stupac nazovite 'MeanArrDelay'
 # ispis poredajte po vremenu kašnjenja silazno
-filter(hflights, Dest %in% c("LAX", "JFK", "LGA")) %>% group_by(DayOfWeek) %>% summarise(MeanArrDelay = round(mean(ArrDelay, na.rm = T), 2)) %>% arrange(desc(MeanArrDelay))
+filter(hflights, Dest %in% c("LAX", "JFK", "LGA")) %>% group_by(DayOfWeek, Dest) %>% summarise(MeanArrDelay = round(mean(ArrDelay, na.rm = T), 2)) %>% arrange(desc(MeanArrDelay))
 
 ```
 

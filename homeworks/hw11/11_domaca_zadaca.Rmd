@@ -1,0 +1,60 @@
+---
+title: "11. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '4 siječnja 2018 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+# Zadatak 1
+
+```{r}
+library(ggplot2)
+data(msleep)
+summary(msleep)
+class(msleep)
+
+filter(msleep, vore == "herbi") %>% top_n(10, sleep_total) %>% select(name, sleep_total, bodywt) %>% mutate(avgwt = mean(bodywt, na.rm = T)) %>% arrange(desc(sleep_total))
+```
+
+***
+
+# Zadatak 2
+
+```{r}
+group_by(msleep, vore) %>% summarise(mean(sleep_total), max(sleep_total), min(sleep_total))
+```
+
+***
+
+# Zadatak 3
+
+```{r}
+nisuBiljojedi <- function(x) sum(x != "herbi" & !is.na(x))
+
+mutate(msleep, cat = ntile(sleep_total, 5)) %>% group_by(cat) %>% summarise(ukupno = n(), nisuBiljojedi = nisuBiljojedi(vore))
+```
+
+***
+
+# Zadatak 4
+
+```{r}
+conservationStatus <- data.frame( 
+  code = c("ex", "ew", "cr", "en", "vu", "nt", "cd", "lc"),
+  description = c("extinct", "extinct in the wild", 
+                 "critically endangered", "endangered",
+                 "vulnerable", "near threatened", 
+                 "conservation dependent", "least concern"))
+msleep <- left_join(msleep, conservationStatus, by = c("conservation" = "code"))
+names(msleep)[names(msleep) == 'description'] <- 'conservationDesc'
+msleep
+```
+
