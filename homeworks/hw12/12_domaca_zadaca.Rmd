@@ -1,0 +1,84 @@
+---
+title: "12. domaca zadaca"
+author: "Jasmin Redzepovic"
+date: '18 siječnja 2018 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(gridExtra)
+library(GGally)
+knitr::opts_chunk$set(results = 'hold')
+```
+
+***
+
+# Zadatak 1
+
+```{r}
+data("diamonds")
+head(diamonds)
+
+g1 <- ggplot(diamonds, aes(price)) + geom_histogram(bins = 10)
+g2 <- ggplot(diamonds, aes(price)) + geom_freqpoly(bins = 10)
+g3 <- g1 + aes(fill = clarity)
+g4 <- g2 + aes(color = clarity)
+
+grid.arrange(g1, g2, g3, g4)
+```
+
+***
+
+# Zadatak 2
+
+```{r}
+data(mpg)
+head(mpg)
+
+g2_1 <- ggplot(mpg, aes(x = displ, y = cty, color = class)) + geom_point(shape = 8, size = 4, alpha = 0.6) + geom_smooth(aes(x = displ, y = cty), method = "loess", se = F, linetype = "dashed", size = 1.2, color = "Gray",inherit.aes = F) + labs(x = "Engine displacement / litres", y = "City miles per gallon")
+
+g2_2 <- ggplot(mpg, aes(x = drv, y = hwy)) + geom_boxplot() + labs(x = "Drive type", y = "Highway miles per gallon")
+
+g2_3 <- ggplot(mpg, aes(x = drv, fill = manufacturer)) + geom_histogram(stat = "count", position = "fill", color = "White") + labs(x = "Drive type", y = "ratio")
+
+g2_1
+g2_2
+g2_3
+```
+
+***
+
+# Zadatak 3
+
+```{r}
+ggplot(mpg, aes(x = as.factor(cyl), fill = as.factor(year))) + geom_bar() + scale_x_discrete(name = "broj cilindara") + scale_y_continuous(name = "ukupno", limits = c(0, 100)) + scale_fill_brewer(name = "godina", palette = "Dark2")
+```
+
+***
+
+# Zadatak 4
+
+```{r}
+ggplot(mpg, aes(x = as.factor(trans), y = displ)) + geom_boxplot() + theme_bw() + theme(axis.text.x = element_text(angle = 90))
+```
+
+
+***
+
+# Zadatak 5
+
+```{r}
+ggplot(mpg, aes(hwy)) + geom_histogram(bins = 10, position = "dodge") + facet_wrap(~ cyl, ncol = 2)
+```
+
+***
+
+# Zadatak 6
+
+```{r}
+prodaja <- data.frame(mjesec = 1:12, ukupno = c(10000, 5000, 12000, 3000, 5000, 7000, 10000, 2000, 4000, 8000, 11000, 14000))
+
+ggplot(prodaja, aes(x = mjesec, y = ukupno)) + geom_bar(stat = "identity") + scale_x_continuous(breaks = c(1:12))
+```
+
